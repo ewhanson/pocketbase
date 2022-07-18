@@ -6,6 +6,7 @@
     import Field from "@/components/base/Field.svelte";
     import UploadedFilePreview from "@/components/base/UploadedFilePreview.svelte";
     import RecordFilePreview from "@/components/records/RecordFilePreview.svelte";
+    import {fixRotationOfFile} from "@/utils/CustomHelper";
 
     export let record;
     export let value = "";
@@ -142,9 +143,9 @@
                     type="file"
                     class="hidden"
                     multiple={isMultiple}
-                    on:change={() => {
+                    on:change={async () => {
                         for (let file of fileInput.files) {
-                            uploadedFiles.push(file);
+                            uploadedFiles.push(await fixRotationOfFile(file));
                         }
                         uploadedFiles = uploadedFiles;
                         fileInput.value = null; // reset
